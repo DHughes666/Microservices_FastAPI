@@ -1,16 +1,67 @@
 import uvicorn
 from fastapi import (
     FastAPI, Path, Query, Request, Body)
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, SecretStr, HttpUrl, Json
+from typing import Optional, Dict, List
+
+from sqlalchemy import Column, Integer, Float, String
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 app = FastAPI()
+
+class ProductORM(Base):
+    __tablename__ = 'products'
+    prodId = Column(Integer, primary_key=True, nullable=False)
+    prodName = Column(String(63), unique=True)
+    price = Column(Float)
+    stock = Column(Integer)
+
+prod_alchemy = ProductORM(
+    prodId=1,
+    prodName="PS5 Console",
+    price = 450000,
+    stock = 50
+)
+
+class Suppliers(BaseModel):
+    supplierID: int
+    supplierName: str 
+
+class ProductOne(BaseModel):
+    productID: int
+    productName: str
+    price: int
+    supplier: List[Suppliers]
+
+class Customers(BaseModel):
+    custID: int
+    custName: str
+    products: List[ProductOne]
+
 
 class Product(BaseModel):
     prodId: int
     prodName: str
     price: float
     stock: int
+    class Config:
+        from_attributes=True
+    
+product = Product.from_orm(prod_alchemy)
+
+class Student(BaseModel):
+    StudentID: int
+    name: str
+    subjects: Dict[str, int]
+
+class Employee(BaseModel):
+    ID: str
+    pwd: SecretStr
+    salary: int
+    details: Json
+    FBProfile: HttpUrl
 
 product_list = []
 
@@ -54,6 +105,18 @@ async def producty(product: Product):
         product.price = dct['price']
     product_list.append(product)
     return product_list
+
+@app.post("/student")
+async def add_student(student: Student):
+    return student
+
+@app.post("/employeere")
+async def add_employere(emp: Employee):
+    return emp
+
+@app.post("/customer")
+async def get_customer(c1: Customers):
+    return c1
 
 
 if __name__ == '__main__':
