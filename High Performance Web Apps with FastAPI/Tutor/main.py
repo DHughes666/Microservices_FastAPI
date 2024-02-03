@@ -1,9 +1,18 @@
 import uvicorn
 from fastapi import (
     FastAPI, Path, Query, Request, Body)
+from pydantic import BaseModel
 from typing import Optional
 
 app = FastAPI()
+
+class Product(BaseModel):
+    prodId: int
+    prodName: str
+    price: float
+    stock: int
+
+product_list = []
 
 @app.get('/')
 async def index():
@@ -35,6 +44,16 @@ async def add_new(request: Request, prodId:int = Body(),
                   stock: int = Body()):
     product = {'Product ID': prodId, 'Product Name': prodName,
                'Price': price, 'Stock': stock}
+    
+@app.post("/producty/")
+async def producty(product: Product):
+    dct = product.model_dump()
+    price = dct['price']
+    if price > 5000:
+        dct['price'] = price + price * 0.1
+        product.price = dct['price']
+    product_list.append(product)
+    return product_list
 
 
 if __name__ == '__main__':
