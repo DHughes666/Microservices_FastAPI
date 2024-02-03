@@ -1,5 +1,6 @@
 import uvicorn
-from fastapi import FastAPI, Path, Query
+from fastapi import (
+    FastAPI, Path, Query, Request, Body)
 from typing import Optional
 
 app = FastAPI()
@@ -27,6 +28,13 @@ async def get_employee_branch(branch_id:int, name:str=Path(min_length=5),
     employee = {"name": name, 'Branch': brname, 
                 'Branch_id': branch_id, 'Age': age}
     return employee
+
+@app.post("/product")
+async def add_new(request: Request, prodId:int = Body(),
+                  prodName: str = Body(), price: float = Body(),
+                  stock: int = Body()):
+    product = {'Product ID': prodId, 'Product Name': prodName,
+               'Price': price, 'Stock': stock}
 
 
 if __name__ == '__main__':
