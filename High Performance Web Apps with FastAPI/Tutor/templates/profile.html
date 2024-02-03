@@ -1,0 +1,11 @@
+<html>
+    <bod>
+        <h2>Name: {{ data.get('name')}}</h2>
+        <h3>Programming Proficiency</h3>
+        <ul>
+            {% for language in data.get('langs') %}
+            <b><li>{{ language }}</li></b>
+            {% endfor %}
+        </ul>
+    </bod>
+</html>
