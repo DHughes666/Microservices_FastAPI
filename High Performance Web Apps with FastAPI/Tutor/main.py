@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Path, Query
 from typing import Optional
 
 app = FastAPI()
@@ -21,7 +21,8 @@ async def get_employee(name: str, age: int = 20):
     return {"name": name, "age": age}
 
 @app.get('/employee/{name}/branch/{branch_id}')
-async def get_employee_branch(name: str, brname: str, branch_id:int,
+async def get_employee_branch(branch_id:int, name:str=Path(min_length=5), 
+                              brname:str=Query(None, min_length=5, max_length=10), 
                               age:Optional[int] = None):
     employee = {"name": name, 'Branch': brname, 
                 'Branch_id': branch_id, 'Age': age}
