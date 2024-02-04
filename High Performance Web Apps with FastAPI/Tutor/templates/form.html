@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <link rel="stylesheet" 
+        href="{{ url_for('static', path='formstyle.css') }}">
+    </head>
+    <body>
+        <h3>Application Form</h3>
+        <div>
+            <form action="/form/" method="POST">
+                <label for="Name">Name of Applicant</label>
+                <input type="text" name="name" id="Name">
+
+                <label for="add">Address</label>
+                <input type="text" name="add" id="add">
+
+                <label for="post">Post</label>
+                <select id="post" name="post">
+                    <option value="Manager">Manager</option>
+                    <option value="Cashier">Cashier</option>
+                    <option value="Operator">Operator</option>
+                </select>
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </body>
+</html>
