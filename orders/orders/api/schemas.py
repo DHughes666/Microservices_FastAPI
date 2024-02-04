@@ -26,5 +26,5 @@ class CreateOrderSchema(BaseModel):
 
 class GetOrderSchema(CreateOrderSchema):
     id: UUID
-    created: int = Field(description='Date in the form of UNIX timestamp')
+    created: float = Field(description='Date in the form of UNIX timestamp')
     status: StatusEnum
