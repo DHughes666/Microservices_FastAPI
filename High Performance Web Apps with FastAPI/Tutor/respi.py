@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 import uvicorn
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response, Form
 
 app = FastAPI()
 
@@ -20,6 +20,13 @@ class ProductVal(BaseModel):
 async def add_new(product: Product):
     product.inventory_val = product.price * product.stock
     return product
+
+@app.post("/setcookie/")
+async def set_cookie(
+    request: Request, response: Response, user:str=Form(...),
+    pwd:str=Form(...)):
+    response.set_cookie(key="user", value=user)
+    return {'message': "Hello, world!"}
 
 if __name__ == '__main__':
     uvicorn.run("respi:app", host="0.0.0.0", port=8000, reload=True)
