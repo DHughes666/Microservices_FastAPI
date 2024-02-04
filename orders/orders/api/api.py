@@ -44,20 +44,49 @@ async def create_order(order_details: CreateOrderSchema):
 
 @app.get('/orders/{order_id}', response_model=GetOrderSchema)
 async def get_order(order_id: UUID):
-    return order
+    for order in ORDERS:
+        if order['id'] == order_id:
+            return order
+    raise HTTPException(
+        status_code=404, detail=f'Order with ID {order_id} not found'
+    )
 
 @app.put('/orders/{order_id}', response_model=GetOrderSchema)
 async def update_order(order_id: UUID, order_details: CreateOrderSchema):
-    return order
+    for order in ORDERS:
+        if order['id'] == order_id:
+            order.update(order_details.model_dump())
+            return order
+    raise HTTPException(
+        status_code=404, detail=f'Order with ID {order_id} not found'
+    )
 
-@app.delete('/orders/{order_id}', status_code=status.HTTP_204_NO_CONTENT)
+@app.delete('/orders/{order_id}')
 async def delete_order(order_id: UUID):
-    return Response(status_code=HTTPStatus.NO_CONTENT.value)
+    for index, order in enumerate(ORDERS):
+        if order['id'] == order_id:
+            ORDERS.pop(index)
+            return ('Delete successful')
+    raise HTTPException(
+        status_code=404, detail=f'Order with ID {order_id} not found'
+    )
 
 @app.post('/orders/{order_id}/cancel', response_model=GetOrderSchema)
 async def cancel_order(order_id: UUID):
-    return order
+    for order in ORDERS:
+        if order['id'] == order_id:
+            order['status'] = 'cancelled'
+            return order
+    raise HTTPException(
+        status_code=404, detail=f'Order with ID {order_id} not found'
+    )
 
 @app.post('/orders/{order_id}/pay', response_model=GetOrderSchema)
 async def pay_order(order_id: UUID):
-    return order
+    for order in ORDERS:
+        if order['id'] == order_id:
+            order['status'] = 'progress'
+            return order
+    raise HTTPException(
+        status_code=404, detail=f'Order with ID {order_id} not found'
+    )
