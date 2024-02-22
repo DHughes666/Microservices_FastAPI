@@ -4,12 +4,14 @@ from fastapi import FastAPI
 app = FastAPI()
 
 BOOKS = {
-    'book_1': {'title': 'Things Fall Apart', 'Author': 'Chinua Achebe'},
-    'book_2': {'title': 'After Death', 'Author': 'Dean Koontz'},
-    'book_3': {'title': 'Physics of the Impossible', 'Author': 'Michio Kaku'},
-    'book_4': {'title': 'Hacking Darwin', 'Author': 'Jamie Metzl'},
-    'book_5': {'title': 'Zero Hour', 'Author': 'David Baldacci'},
+    'book_1': {'title': 'Things Fall Apart', 'author': 'Chinua Achebe'},
+    'book_2': {'title': 'After Death', 'author': 'Dean Koontz'},
+    'book_3': {'title': 'Physics of the Impossible', 'author': 'Michio Kaku'},
+    'book_4': {'title': 'Hacking Darwin', 'author': 'Jamie Metzl'},
+    'book_5': {'title': 'Zero Hour', 'author': 'David Baldacci'},
+    'book_6': {'title': 'Contagion', 'author': 'Robin Cook'},
 }
+
 
 @app.get("/")
 async def first_api():
