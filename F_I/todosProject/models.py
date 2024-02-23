@@ -1,4 +1,6 @@
-from sqlalchemy import Boolean, Column, String, Integer
+from sqlalchemy import (
+    Boolean, Column, String, Integer, ForeignKey)
+from sqlalchemy.orm import relationship
 from database import Base
 
 
@@ -10,5 +12,19 @@ class Todos(Base):
     description = Column(String)
     priority = Column(Integer)
     complete = Column(Boolean, default=False)
+    owner_id = Column(Integer, ForeignKey("users.id"))
 
-    
+    owner = relationship("Users", back_populates="todos")
+
+class Users(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
+    is_active = Column(Boolean, default=True)
+
+    todos = relationship("Todos", back_populates="owner")
