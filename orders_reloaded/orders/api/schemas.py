@@ -4,7 +4,7 @@ from typing import List
 from uuid import UUID
 from typing import Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, validator, Extra
 
 class SizeEnum(str, Enum):
     small = 'small'
@@ -23,13 +23,14 @@ class OrderItemSchema(BaseModel):
     size: SizeEnum
     quantity: int = Field(ge=1, le=1000000, default=1)
 
-    @validator('quantity')
-    def quantity_non_nullable(cls, value):
-        assert value is not None, 'quantity may not be None'
-        return value
+    class Config:
+        extra = 'forbid'
 
 class CreateOrderSchema(BaseModel):
     order: List[OrderItemSchema]
+
+    class Config:
+        extra = 'forbid'
 
 class GetOrderSchema(CreateOrderSchema):
     id: UUID

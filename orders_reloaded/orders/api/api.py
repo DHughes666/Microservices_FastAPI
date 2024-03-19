@@ -6,7 +6,7 @@ from uuid import UUID
 from starlette.responses import Response
 from fastapi import HTTPException
 from starlette import status
-from typing import List
+from typing import List, Optional
 
 from orders.app import app
 from orders.api.schemas import (
@@ -30,8 +30,26 @@ order = {
 
 
 @app.get('/orders', response_model=List[GetOrderSchema])
-async def get_orders():
-    return ORDERS
+async def get_orders(
+    cancelled: Optional[bool] = None, limit: Optional[int] = None):
+    if cancelled is None and limit is None:
+        return ORDERS
+    
+    query_set = [order for order in ORDERS]
+
+    if cancelled is not None:
+        if cancelled:
+            query_set = [
+                order for order in query_set if order['status'] == 'cancelled'
+            ]
+    else:
+        query_set = [
+            order for order in query_set if order['status'] != 'cancelled'
+        ]
+    if limit is not None and len(query_set) > limit:
+        return query_set[:limit]
+    
+    return query_set
 
 @app.post('/orders', 
           status_code=status.HTTP_201_CREATED,

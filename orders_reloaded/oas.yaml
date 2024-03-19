@@ -6,6 +6,8 @@ info:
   version: 1.0.0
 
 servers:
+  - url: https://localhost:8000
+    description: URL for local development and testing
   - url: https://coffeemesh.com
     description: main production server
   - url: https://coffeemesh-staging.com
@@ -241,6 +243,7 @@ components:
             $ref: '#/components/schemas/OrderItemSchema'
 
     GetOrderSchema:
+      additionalProperties: false
       type: object
       required:
         - id
