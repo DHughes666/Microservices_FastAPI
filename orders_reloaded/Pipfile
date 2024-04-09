@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
+flask-smorest = "*"
 
 [dev-packages]
 
