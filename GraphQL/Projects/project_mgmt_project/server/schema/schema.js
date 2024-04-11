@@ -1,4 +1,6 @@
 const { projects, clients } = require('../dummyData');
+const Project = require('../../models/project');
+const Client = require('../../models/client');
 const {
     GraphQLObjectType, GraphQLID, GraphQLString,
     GraphQLSchema,
