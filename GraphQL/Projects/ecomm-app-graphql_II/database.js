@@ -38,4 +38,23 @@ const genres = [
     {id: 'cat-02', name: 'History'}
 ]
 
-module.exports = {allCourses, genres}
+const reviews = [
+    {
+        id: "rev-01",
+        date: "2021-01-01",
+        title: "This is bad",
+        comment: "When I bought this it broke the computer",
+        rating: 1,
+        courseId: "book-03",
+    },
+    {
+        id: "rev-02",
+        date: "2022-02-08",
+        title: "This is awesome",
+        comment: "Best book I ever bought",
+        rating: 4,
+        courseId: "book-04"
+    }
+]
+
+module.exports = {allCourses, genres, reviews}
