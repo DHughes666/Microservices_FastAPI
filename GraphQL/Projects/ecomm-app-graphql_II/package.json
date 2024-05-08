@@ -9,6 +9,7 @@
   "dependencies": {
     "apollo-server": "^3.13.0",
     "graphql": "^16.8.1",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "uuid": "^9.0.1"
   }
 }
