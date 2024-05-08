@@ -38,4 +38,11 @@ exports.typeDefs = gql`
         discount: Boolean
         avgRating: Int
     }
+
+    type Mutation {
+        addGenre(input: AddGenreInput!): Genre!
+    }
+    input AddGenreInput {
+        name: String!
+    }
 `
