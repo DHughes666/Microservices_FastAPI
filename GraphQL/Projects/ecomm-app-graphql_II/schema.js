@@ -44,9 +44,31 @@ exports.typeDefs = gql`
         addCourse(input: AddCourseInput!): Course!
         addReview(input: AddReviewInput!): Review!
         deleteGenre(id: ID!): Boolean!
+        deleteCourse(id: ID!): Boolean!
+        deleteReview(id: ID!): Boolean!
+        updateGenre(id: ID!, input: UpdateGenreInput!): Genre!
+        updateCourse(id: ID!, input: UpdateCourseInput!): Course!
+        updateReview(id: ID!, input: UpdateReviewInput!): Review!
     }
     input AddGenreInput {
         name: String!
+    }
+    input UpdateGenreInput {
+        name: String!
+    }
+    input UpdateCourseInput {
+        name: String!
+        description: String!
+        price: Float!
+        discount: Boolean!
+        genreId: ID
+    }
+    input UpdateReviewInput {
+        id: ID!
+        date: String!
+        title: String!
+        comment: String!
+        rating: Int!
     }
     input AddCourseInput {
         name: String!
