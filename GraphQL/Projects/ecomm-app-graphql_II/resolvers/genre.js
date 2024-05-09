@@ -1,9 +1,9 @@
 exports.Genre = {
     courses: (parent, args, context) => {
-        const courses = context.allCourses
+        const {db} = context;
         const genreId = parent.id;
         const { filter } = args;
-        const genreProducts = courses.filter(
+        const genreProducts = db.allCourses.filter(
             item => item.genreId === genreId);
         let filteredGenre = genreProducts;
         if(filter){

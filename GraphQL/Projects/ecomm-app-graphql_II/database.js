@@ -57,4 +57,4 @@ const reviews = [
     }
 ]
 
-module.exports = {allCourses, genres, reviews}
+exports.db = {allCourses, genres, reviews}

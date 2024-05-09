@@ -42,6 +42,8 @@ exports.typeDefs = gql`
     type Mutation {
         addGenre(input: AddGenreInput!): Genre!
         addCourse(input: AddCourseInput!): Course!
+        addReview(input: AddReviewInput!): Review!
+        deleteGenre(id: ID!): Boolean!
     }
     input AddGenreInput {
         name: String!
@@ -52,5 +54,12 @@ exports.typeDefs = gql`
         price: Float!
         discount: Boolean!
         genreId: ID!
+    }
+    input AddReviewInput {
+        date: String!
+        title: String!
+        comment: String!
+        rating: Int!
+        courseId: ID
     }
 `

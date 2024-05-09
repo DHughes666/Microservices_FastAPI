@@ -1,12 +1,12 @@
 exports.Course = {
     genre: (parent, args, context) => {
-        const genres = context.genres
+        const db = context.db;
         const genreId = parent.genreId;
-        return genres.find(item => item.id === genreId);
+        return db.genres.find(item => item.id === genreId);
     },
     reviews: (parent, args, context) => {
-        const reviews = context.reviews
+        const db = context.db;
         const { id } = parent;
-        return reviews.filter(item => item.courseId === id);
+        return db.reviews.filter(item => item.courseId === id);
     }
 }
